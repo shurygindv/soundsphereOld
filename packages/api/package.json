@@ -21,6 +21,7 @@
     "@nestjs/core": "^5.5.0",
     "class-transformer": "^0.2.0",
     "class-validator": "^0.9.1",
+    "ramda": "^0.26.1",
     "reflect-metadata": "^0.1.12",
     "uuid": "^3.3.2"
   },

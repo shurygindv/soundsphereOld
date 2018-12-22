@@ -3,3 +3,7 @@ export enum RoleType {
   Moderator = 2,
   Administrator = 4,
 }
+
+export type Element<ArrayType> = ArrayType extends (infer ElementType)[]
+  ? ElementType
+  : ArrayType;

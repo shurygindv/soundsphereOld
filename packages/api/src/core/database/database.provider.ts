@@ -1,6 +1,8 @@
 import * as sql from 'mssql';
 
-export class DatabaseProvider {
+import {IDbProvider} from '../core.types';
+
+export class DatabaseProvider implements IDbProvider {
   static create(config: sql.config) {
     return new DatabaseProvider(config);
   }
@@ -25,7 +27,7 @@ export class DatabaseProvider {
     await this.connectionPool.close();
   }
 
-  request(): sql.Request {
+  request(): sql.Request {//TODO: request wrapper
     const request = this.connectionPool.request();
 
     return request;
