@@ -1,0 +1,13 @@
+{
+  "name": "soundsphere",
+  "version": "1.0.0",
+  "description": "monorepo",
+  "main": "index.js",
+  "repository": "https://github.com/shurygindv/soundsphere.git",
+  "author": "shurygindv <shurygindv1@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.8.0"
+  }
+}
