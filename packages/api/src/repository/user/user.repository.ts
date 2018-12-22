@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 
 import {UserDBO} from './user.dbo';
-import {ICrud} from './../../types';
+import {ICrud} from './../repository.types';
 
 @Injectable()
 export class UserRepository implements ICrud<UserDBO> {

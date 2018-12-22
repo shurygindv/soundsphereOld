@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 
-import {ICrud} from './../../types';
+import {ICrud} from './../repository.types';
 import {ImageDBO} from './image.dbo';
 
 @Injectable()

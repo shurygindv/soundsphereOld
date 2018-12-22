@@ -9,7 +9,7 @@ import {
   IsOptional,
 } from 'class-validator';
 
-import {RoleType} from '../../types';
+import {RoleType} from '../../app.types';
 
 export class UserDBO {
   @IsUUID()
