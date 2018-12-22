@@ -8,28 +8,39 @@ import {
   IsUUID,
   IsOptional,
 } from 'class-validator';
-
 import {RoleType} from '../../app.types';
 
+
 export class UserDBO {
+  @IsOptional()
+  @IsNotEmpty()
   @IsUUID()
-  Id: string;
+  public Id: string;
 
   @IsEnum(RoleType)
-  RoleId: RoleType;
+  public RoleId: RoleType;
+
+  @IsUUID()
+  @IsOptional()
+  public ImageId: string;
+
+  @MaxLength(50)
+  @MinLength(5)
+  @IsNotEmpty()
+  public Password: string;
 
   @MaxLength(50)
   @MinLength(2)
   @IsString()
   @IsNotEmpty()
-  FirstName: string;
+  public FirstName: string;
 
   @MaxLength(50)
   @MinLength(2)
   @IsOptional()
-  LastName: string;
+  public LastName: string;
 
   @IsEmail()
   @MaxLength(50)
-  Email: string;
+  public Email: string;
 }

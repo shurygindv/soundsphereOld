@@ -1,8 +1,8 @@
 import * as sql from 'mssql';
 import * as R from 'ramda';
 
-import {IDbProvider} from '../core/core.types';
-import {Element} from '../app.types';
+import {IDbProvider} from 'app/core/core.types';
+import {Element} from 'app/fixtures/types';
 import {SqlRequestResult} from '.';
 
 type Request = sql.Request;
@@ -30,6 +30,8 @@ const mapOutputToRequest = (req: Request, output: SqlOutput) =>
 export const sqlTypes = {
   int: sql.Int,
   bigInt: sql.BigInt,
+  nVarChar: sql.NVarChar,
+  varBinary: sql.VarBinary,
 };
 
 type OptionalOutput = {[key: string]: any}; //see mssql types

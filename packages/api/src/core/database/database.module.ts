@@ -1,9 +1,9 @@
-import {Module, Provider} from '@nestjs/common';
+import {Module} from '@nestjs/common';
 
 import {DatabaseProvider} from './database.provider';
 import {dbConfig} from '../config/db.config';
 
-const DbProvider: Provider = {
+const DbProvider = {
   provide: DatabaseProvider,
   useFactory: async () => {
     const connection = await DatabaseProvider.create(dbConfig);

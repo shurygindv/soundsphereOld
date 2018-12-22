@@ -8,9 +8,10 @@ import {
 } from 'class-validator';
 
 export class ImageDBO {
-  @IsUUID()
+  @IsOptional()
   @IsNotEmpty()
-  Id: number;
+  @IsUUID()
+  Id: string;
 
   @MaxLength(100)
   @IsString()
