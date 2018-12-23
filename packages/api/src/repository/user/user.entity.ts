@@ -23,7 +23,6 @@ export class UserEntity {
   @IsOptional()
   public ImageId: string;
 
-  @MaxLength(50)
   @MinLength(5)
   @IsNotEmpty()
   public Password: string;

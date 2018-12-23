@@ -1,6 +1,6 @@
 export const dbConfig = {
-  server: '',
+  server: 'DESKTOP-PMLDG2T',
   user: 'danila',
-  password: '',
-  database: '',
+  password: 'admin',
+  database: 'soundsphere',
 };

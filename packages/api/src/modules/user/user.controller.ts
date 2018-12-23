@@ -6,24 +6,26 @@ import {
   UsePipes,
   ValidationPipe,
   HttpCode,
+  Body,
+  Param,
 } from '@nestjs/common';
 
 import {UserService} from './user.service';
 import {CreateUserDTO} from './dto/create-user.dto';
 
-@Controller()
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('register')
   @UsePipes(new ValidationPipe())
   @HttpCode(201)
-  async create(userDto: CreateUserDTO) {
+  async create(@Body('user') userDto: CreateUserDTO) {
     return await this.userService.create(userDto);
   }
 
-  @Get()
-  async findOne(@Query('id') id: string) {
+  @Get('/:id')
+  async findOne(@Param('id') id: string) {
     return await this.userService.findOne(Number(id));
   }
 

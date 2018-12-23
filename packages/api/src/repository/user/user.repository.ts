@@ -17,9 +17,7 @@ const PROCEDURE_NAME = {
 export class UserRepository extends BaseRepository
   implements ICrud<UserEntity> {
   async create(entity: UserEntity): Promise<boolean> {
-    const commander = SqlCommander.create<UserEntity, {UserId: number}>(
-      this.db,
-    );
+    const commander = SqlCommander.create<UserEntity>(this.db);
 
     if (entity.ImageId) {
       commander.addInput('ImageId', entity.ImageId);
@@ -29,17 +27,17 @@ export class UserRepository extends BaseRepository
       commander.addInput('LastName', entity.LastName);
     }
 
+    const passwordHash = await Crypto.hash(entity.Password);
+
     commander.addInput('Id', generateId());
-    commander.addInput('Password', Crypto.hash(entity.Password));
+    commander.addInput('Password', passwordHash);
     commander.addInput('RoleId', entity.RoleId);
     commander.addInput('Email', entity.Email);
     commander.addInput('FirstName', entity.FirstName);
 
-    commander.addOutput('UserId', sqlTypes.bigInt);
+    await commander.execute(PROCEDURE_NAME.CREATE);
 
-    const result = await commander.execute(PROCEDURE_NAME.CREATE);
-
-    return result.output.UserId;
+    return true;
   }
 
   async findOne(id: number): Promise<UserEntity> {

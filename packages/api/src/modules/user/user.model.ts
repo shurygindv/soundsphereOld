@@ -31,4 +31,18 @@ export class UserModel {
   @IsEmail()
   @IsNotEmpty()
   public readonly email: string;
+
+  constructor(
+    imageId: string,
+    roleId: RoleType,
+    firstName: string,
+    lastName: string,
+    email: string,
+  ) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.imageId = imageId;
+    this.roleId = roleId;
+    this.email = email;
+  }
 }

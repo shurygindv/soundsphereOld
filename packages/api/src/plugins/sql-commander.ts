@@ -69,7 +69,6 @@ export default class SqlCommander<I, O = OptionalOutput> {
 
   async execute(name: string): Promise<SqlRequestResult<Element<I>, O>> {
     const request = this.withOutput(this.withInput(this.db.request()));
-
     const result = await request.execute(mapNameToAppName(name));
 
     return new SqlRequestResult<Element<I>, O>(result);

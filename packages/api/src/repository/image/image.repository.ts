@@ -1,8 +1,8 @@
 import {Injectable} from '@nestjs/common';
 
+import {generateId, SqlCommander} from 'app/plugins';
 import {ImageEntity} from './image.entity';
 import {ICrud} from './../repository.types';
-import {generateId, SqlCommander, sqlTypes} from 'app/plugins';
 import {BaseRepository} from '../../shared/';
 
 const PROCEDURE_NAME = {
@@ -16,9 +16,7 @@ const PROCEDURE_NAME = {
 export class ImageRepository extends BaseRepository
   implements ICrud<ImageEntity> {
   async create(entity: ImageEntity): Promise<boolean> {
-    const commander = SqlCommander.create<ImageEntity, {ImageId: number}>(
-      this.db,
-    );
+    const commander = SqlCommander.create<ImageEntity>(this.db);
 
     commander.addInput('Id', generateId());
     commander.addInput('Data', entity.Data);
@@ -28,11 +26,9 @@ export class ImageRepository extends BaseRepository
       commander.addInput('MimeType', entity.MimeType);
     }
 
-    commander.addOutput('ImageId', sqlTypes.bigInt);
+    await commander.execute(PROCEDURE_NAME.CREATE);
 
-    const result = await commander.execute(PROCEDURE_NAME.CREATE);
-
-    return result.output.ImageId;
+    return true;
   }
 
   async findOne(id: number): Promise<ImageEntity> {
