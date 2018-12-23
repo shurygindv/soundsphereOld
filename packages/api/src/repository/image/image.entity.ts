@@ -7,7 +7,7 @@ import {
   IsUUID,
 } from 'class-validator';
 
-export class ImageDBO {
+export class ImageEntity {
   @IsOptional()
   @IsNotEmpty()
   @IsUUID()
@@ -26,4 +26,10 @@ export class ImageDBO {
   @MinLength(1)
   @IsOptional()
   MimeType: string;
+
+  constructor(name: string, data: Buffer, mimeType?: string) {
+    this.Name = name;
+    this.Data = data;
+    this.MimeType = mimeType;
+  }
 }

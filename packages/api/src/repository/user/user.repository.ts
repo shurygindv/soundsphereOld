@@ -1,15 +1,9 @@
 import {Injectable} from '@nestjs/common';
 
-import {UserDBO} from './user.dbo';
+import {UserEntity} from './user.entity';
 import {BaseRepository} from 'app/shared/';
-import {
-  generateId,
-  Crypto,
-  SqlCommander,
-  sqlTypes,
-} from 'app/plugins';
+import {generateId, Crypto, SqlCommander, sqlTypes} from 'app/plugins';
 import {ICrud} from 'app/repository/repository.types';
-
 
 const PROCEDURE_NAME = {
   CREATE: 'User_Create',
@@ -21,9 +15,11 @@ const PROCEDURE_NAME = {
 
 @Injectable()
 export class UserRepository extends BaseRepository
-  implements ICrud<UserDBO> {
-  async create(entity: UserDBO): Promise<boolean> {
-    const commander = SqlCommander.create<UserDBO, {UserId: number}>(this.db);
+  implements ICrud<UserEntity> {
+  async create(entity: UserEntity): Promise<boolean> {
+    const commander = SqlCommander.create<UserEntity, {UserId: number}>(
+      this.db,
+    );
 
     if (entity.ImageId) {
       commander.addInput('ImageId', entity.ImageId);
@@ -46,35 +42,35 @@ export class UserRepository extends BaseRepository
     return result.output.UserId;
   }
 
-  async findOne(id: number): Promise<UserDBO> {
-    const commander = SqlCommander.create<UserDBO>(this.db);
+  async findOne(id: number): Promise<UserEntity> {
+    const commander = SqlCommander.create<UserEntity>(this.db);
 
     commander.addInput('Id', id);
 
     const result = await commander.execute(PROCEDURE_NAME.FIND_BY_ID);
 
-    return await this.validate(UserDBO, result.singleValue);
+    return await this.validate(UserEntity, result.singleValue);
   }
 
-  public async findOneByEmail(email: string): Promise<UserDBO> {
-    const commander = SqlCommander.create<UserDBO>(this.db);
+  public async findOneByEmail(email: string): Promise<UserEntity> {
+    const commander = SqlCommander.create<UserEntity>(this.db);
 
     commander.addInput('Email', email);
 
     const result = await commander.execute(PROCEDURE_NAME.FIND_BY_EMAIL);
 
-    return await this.validate(UserDBO, result.singleValue);
+    return await this.validate(UserEntity, result.singleValue);
   }
 
-  async findAll(): Promise<UserDBO[]> {
-    const commander = SqlCommander.create<UserDBO[]>(this.db);
+  async findAll(): Promise<UserEntity[]> {
+    const commander = SqlCommander.create<UserEntity[]>(this.db);
 
     const result = await commander.execute(PROCEDURE_NAME.FIND_ALL);
 
-    return await this.validate(UserDBO, result.values);
+    return await this.validate(UserEntity, result.values);
   }
 
-  update(entity: UserDBO): Promise<boolean> {
+  update(entity: UserEntity): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
 

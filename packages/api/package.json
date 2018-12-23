@@ -13,13 +13,12 @@
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && npm run build",
     "start:prod": "node dist/main.js",
-    "lint": "tslint -p tsconfig.json -c tslint.json"
+    "lint": "tslint -p tsconfig.json -c tslint.json 'src/**/*.ts' --fix"
   },
   "private": true,
   "dependencies": {
     "@nestjs/common": "^5.5.0",
     "@nestjs/core": "^5.5.0",
-    "automapper-ts": "^1.9.0",
     "bcrypt": "^3.0.2",
     "class-transformer": "^0.2.0",
     "class-validator": "^0.9.1",
@@ -35,6 +34,7 @@
     "nodemon": "^1.18.9",
     "prettier": "^1.15.3",
     "ts-node": "^7.0.1",
-    "tslint": "^5.12.0"
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2"
   }
 }

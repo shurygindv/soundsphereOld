@@ -10,8 +10,7 @@ import {
 } from 'class-validator';
 import {RoleType} from '../../app.types';
 
-
-export class UserDBO {
+export class UserEntity {
   @IsOptional()
   @IsNotEmpty()
   @IsUUID()
@@ -43,4 +42,21 @@ export class UserDBO {
   @IsEmail()
   @MaxLength(50)
   public Email: string;
+
+  constructor(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    imageId: string,
+    roleId: RoleType = RoleType.User,
+  ) {
+    this.FirstName = firstName;
+    this.LastName = lastName;
+    this.Password = password;
+    this.Email = email;
+
+    this.ImageId = imageId;
+    this.RoleId = roleId;
+  }
 }

@@ -27,7 +27,8 @@ export class DatabaseProvider implements IDbProvider {
     await this.connectionPool.close();
   }
 
-  request(): sql.Request {//TODO: request wrapper
+  request(): sql.Request {
+    // TODO: request wrapper
     const request = this.connectionPool.request();
 
     return request;

@@ -7,16 +7,16 @@ import {SqlRequestResult} from '.';
 
 type Request = sql.Request;
 
-type SqlInput = {
+interface SqlInput {
   name: string;
   value: any;
-};
+}
 
-type SqlOutput = {
+interface SqlOutput {
   name: string;
   type: (() => sql.ISqlType) | sql.ISqlType;
   value?: any;
-};
+}
 
 const mapNameToAppName = (name: string) => `S_${name}`;
 
@@ -26,7 +26,6 @@ const mapInputToRequest = (req: Request, input: SqlInput) =>
 const mapOutputToRequest = (req: Request, output: SqlOutput) =>
   req.output(output.name, output.type, output.value);
 
-
 export const sqlTypes = {
   int: sql.Int,
   bigInt: sql.BigInt,
@@ -34,7 +33,9 @@ export const sqlTypes = {
   varBinary: sql.VarBinary,
 };
 
-type OptionalOutput = {[key: string]: any}; //see mssql types
+interface OptionalOutput {
+  [key: string]: any;
+} // see mssql types
 
 export default class SqlCommander<I, O = OptionalOutput> {
   static create<I, O = OptionalOutput>(db: IDbProvider) {

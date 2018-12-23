@@ -1,13 +1,8 @@
 import {Injectable} from '@nestjs/common';
 
-import {ImageDBO} from './image.dbo';
+import {ImageEntity} from './image.entity';
 import {ICrud} from './../repository.types';
-import {
-  generateId,
-
-  SqlCommander,
-  sqlTypes,
-} from 'app/plugins';
+import {generateId, SqlCommander, sqlTypes} from 'app/plugins';
 import {BaseRepository} from '../../shared/';
 
 const PROCEDURE_NAME = {
@@ -19,9 +14,11 @@ const PROCEDURE_NAME = {
 
 @Injectable()
 export class ImageRepository extends BaseRepository
-  implements ICrud<ImageDBO> {
-  async create(entity: ImageDBO): Promise<boolean> {
-    const commander = SqlCommander.create<ImageDBO, {ImageId: number}>(this.db);
+  implements ICrud<ImageEntity> {
+  async create(entity: ImageEntity): Promise<boolean> {
+    const commander = SqlCommander.create<ImageEntity, {ImageId: number}>(
+      this.db,
+    );
 
     commander.addInput('Id', generateId());
     commander.addInput('Data', entity.Data);
@@ -38,21 +35,21 @@ export class ImageRepository extends BaseRepository
     return result.output.ImageId;
   }
 
-  async findOne(id: number): Promise<ImageDBO> {
-    const commander = SqlCommander.create<ImageDBO>(this.db);
+  async findOne(id: number): Promise<ImageEntity> {
+    const commander = SqlCommander.create<ImageEntity>(this.db);
 
     commander.addInput('Id', id);
 
     const result = await commander.execute(PROCEDURE_NAME.FIND_BY_ID);
 
-    return this.validate(ImageDBO, result.singleValue);
+    return this.validate(ImageEntity, result.singleValue);
   }
 
-  findAll(): Promise<ImageDBO[]> {
+  findAll(): Promise<ImageEntity[]> {
     throw new Error('Method not implemented.');
   }
 
-  update(entity: ImageDBO): Promise<boolean> {
+  update(entity: ImageEntity): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
 
