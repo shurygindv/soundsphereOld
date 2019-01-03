@@ -1,1 +1,1 @@
-module HelloWorld = {};
+ReactDOMRe.renderToElementWithId (<App />, "root"); 

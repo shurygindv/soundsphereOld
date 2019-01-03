@@ -20,8 +20,8 @@ module.exports = {
     contentBase: path.join(__dirname, "dist"),
   },
   plugins: [
-    new HtmlWebpackPlugin(//
-    // { template: "./public/index.html",}
-    )
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    })
   ]
 };
