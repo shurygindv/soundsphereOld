@@ -1,14 +1,14 @@
 type actions =
-  | ChangeRoute(Types.route);
+  | ChangePage(Types.page);
 
-type state = {route: Types.route};
+type state = {page: Types.page};
 
-let mapUrlToRoute = (url: ReasonReact.Router.url) : Types.route =>
+let mapUrlToPage = (url: ReasonReact.Router.url) : Types.page =>
   switch (url.path) {
   | ["home"] => Home
   | ["login"] => Login
   | ["register"] => Register
-  | _ => Home
+  | _ => Login
   };
 
 let component = ReasonReact.reducerComponent(__MODULE__);
@@ -16,30 +16,24 @@ let component = ReasonReact.reducerComponent(__MODULE__);
 let make = _children => {
   ...component,
   initialState: () => {
-    route: mapUrlToRoute(ReasonReact.Router.dangerouslyGetInitialUrl()),
+    page: mapUrlToPage(ReasonReact.Router.dangerouslyGetInitialUrl()),
   },
-  reducer: (action, state) =>
-    switch (action) {
-    | ChangeRoute(route) => ReasonReact.Update({...state, route})
-    },
   didMount: self => {
     let warcherId =
       ReasonReact.Router.watchUrl(url =>
-        self.send(ChangeRoute(mapUrlToRoute(url)))
+        self.send(ChangePage(mapUrlToPage(url)))
       );
 
     self.onUnmount(() => ReasonReact.Router.unwatchUrl(warcherId));
   },
-  render: self => {
-    let {route} = self.state;
-    <div>
-      (
-        switch (route) {
-        | Login => <Login />
-        | Register => <Register />
-        | Home => <Home />
-        }
-      )
-    </div>;
-  },
+  reducer: (action, state) =>
+    switch (action) {
+    | ChangePage(page) => ReasonReact.Update({...state, page})
+    },
+  render: self =>
+    switch (self.state.page) {
+    | Home => <Home />
+    | Login => <Login />
+    | Register => <Register />
+    },
 };

@@ -10,18 +10,17 @@ module.exports = {
   entry: "./src/Index.bs.js",
   output: {
     path: path.join(__dirname, "dist"),
-    publicPath: path.join(__dirname, "dist"),
     filename: "main.js"
   },
   devServer: {
     port: PORT,
     compress: true,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, "dist"),
+    contentBase: path.join(__dirname, "dist")
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: "./public/index.html"
     })
   ]
 };

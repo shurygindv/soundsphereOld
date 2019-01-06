@@ -1,4 +1,4 @@
-type route =
+type page =
   | Home
   | Login
   | Register;
