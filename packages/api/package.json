@@ -25,6 +25,7 @@
     "mssql": "^4.3.0",
     "ramda": "^0.26.1",
     "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.3.3",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

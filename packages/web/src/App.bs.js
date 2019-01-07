@@ -6,12 +6,19 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var Home$App = require("./pages/Home.bs.js");
 var Login$App = require("./pages/Login.bs.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
+var Waiting$App = require("./pages/Waiting.bs.js");
 var Register$App = require("./pages/Register.bs.js");
 
 function mapUrlToPage(url) {
   var match = url[/* path */0];
   if (match) {
     switch (match[0]) {
+      case "auth" : 
+          if (match[1]) {
+            return /* Login */1;
+          } else {
+            return /* Waiting */2;
+          }
       case "home" : 
           if (match[1]) {
             return /* Login */1;
@@ -24,7 +31,7 @@ function mapUrlToPage(url) {
           if (match[1]) {
             return /* Login */1;
           } else {
-            return /* Register */2;
+            return /* Register */3;
           }
       default:
         return /* Login */1;
@@ -62,6 +69,8 @@ function make(_children) {
                 case 1 : 
                     return ReasonReact.element(undefined, undefined, Login$App.make(/* array */[]));
                 case 2 : 
+                    return ReasonReact.element(undefined, undefined, Waiting$App.make(/* array */[]));
+                case 3 : 
                     return ReasonReact.element(undefined, undefined, Register$App.make(/* array */[]));
                 
               }

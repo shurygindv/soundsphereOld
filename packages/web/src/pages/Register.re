@@ -291,9 +291,13 @@ let renderBody = () =>
               </FormControl>
               <FormControl margin=`Dense>
                 <Button
+                  href="/login"
                   variant=`Outlined
-                  onClick={_event =>
+                  onClick={event => {
+                    event |> ReactEvent.Synthetic.preventDefault
+
                     ReasonReact.Router.push(Config.routes.login)
+                  }
                   }>
                   <String v="Back" />
                 </Button>

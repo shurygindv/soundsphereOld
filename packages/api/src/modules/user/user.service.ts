@@ -11,6 +11,9 @@ import {UserEntity} from 'app/repository/user/user.entity';
 import {CreateUserDTO} from './dto/create-user.dto';
 import {BaseService} from '../../shared/';
 import {UserModel} from './user.model';
+import {LoginUserDTO} from './dto/login-user.dto';
+import {Crypto} from 'app/plugins';
+
 @Injectable()
 export class UserService extends BaseService {
   constructor(private readonly userRepository: UserRepository) {
@@ -25,15 +28,30 @@ export class UserService extends BaseService {
       throw new BadRequestException('Such user already exists');
     }
 
+    const passwordHash = await Crypto.hash(userDto.password);
+
     const userEntity = new UserEntity(
       userDto.firstName,
       userDto.lastName,
       userDto.email,
-      userDto.password,
+      passwordHash,
       userDto.imageId,
     );
 
     return await this.userRepository.create(userEntity);
+  }
+
+  @UsePipes(new ValidationPipe())
+  async login(userDto: LoginUserDTO): Promise<boolean> {
+    const entity = await this.userRepository.findOneByEmail(userDto.email); // TODO: auth, JWT token
+
+    if (!entity) {
+      return false;
+    }
+
+    const isValid = await Crypto.compare(userDto.password, entity.Password);
+
+    return isValid;
   }
 
   async findOne(id: number) {

@@ -2,7 +2,7 @@ import {Injectable} from '@nestjs/common';
 
 import {UserEntity} from './user.entity';
 import {BaseRepository} from 'app/shared/';
-import {generateId, Crypto, SqlCommander, sqlTypes} from 'app/plugins';
+import {generateId, SqlCommander} from 'app/plugins';
 import {ICrud} from 'app/repository/repository.types';
 
 const PROCEDURE_NAME = {
@@ -27,10 +27,8 @@ export class UserRepository extends BaseRepository
       commander.addInput('LastName', entity.LastName);
     }
 
-    const passwordHash = await Crypto.hash(entity.Password);
-
     commander.addInput('Id', generateId());
-    commander.addInput('Password', passwordHash);
+    commander.addInput('Password', entity.Password);
     commander.addInput('RoleId', entity.RoleId);
     commander.addInput('Email', entity.Email);
     commander.addInput('FirstName', entity.FirstName);

@@ -9,14 +9,14 @@ var email_000 = /* isValid */new RegExp("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$");
 
 var email = /* record */[
   email_000,
-  /* error */"Email is incorrect, it doesn't match a pattern"
+  /* error */"Email doesn't match a pattern"
 ];
 
-var password_000 = /* isValid */new RegExp(".{,5}+");
+var password_000 = /* isValid */new RegExp("^.{5,}$");
 
 var password = /* record */[
   password_000,
-  /* error */"Min 5 characters"
+  /* error */"Min 5 length"
 ];
 
 function minLength_000(count) {
@@ -28,12 +28,12 @@ function minLength_000(count) {
                           /* No_padding */0,
                           /* No_precision */0,
                           /* String_literal */Block.__(11, [
-                              " characters",
+                              " length",
                               /* End_of_format */0
                             ])
                         ])
                     ]),
-                  "Min %d characters"
+                  "Min %d length"
                 ]), count);
 }
 
@@ -55,12 +55,12 @@ function maxLength_000(count) {
                           /* No_padding */0,
                           /* No_precision */0,
                           /* String_literal */Block.__(11, [
-                              " characters",
+                              " length",
                               /* End_of_format */0
                             ])
                         ])
                     ]),
-                  "Max %d characters"
+                  "Max %d length"
                 ]), count);
 }
 
@@ -91,14 +91,14 @@ function use(name, value) {
       if (match) {
         return /* Ok */Block.__(0, [/* Valid */0]);
       } else {
-        return /* Error */Block.__(1, ["Email is incorrect, it doesn't match a pattern"]);
+        return /* Error */Block.__(1, ["Email doesn't match a pattern"]);
       }
     } else {
       var match$1 = password_000.test(value);
       if (match$1) {
         return /* Ok */Block.__(0, [/* Valid */0]);
       } else {
-        return /* Error */Block.__(1, ["Min 5 characters"]);
+        return /* Error */Block.__(1, ["Min 5 length"]);
       }
     }
   } else if (name.tag) {

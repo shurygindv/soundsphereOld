@@ -4,6 +4,7 @@
 var Css = require("bs-css/src/Css.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
+var API$App = require("../API.bs.js");
 var Body$App = require("../components/Body.bs.js");
 var Formality = require("re-formality/src/Formality.bs.js");
 var Config$App = require("../Config.bs.js");
@@ -163,12 +164,20 @@ function renderPasswordField(form) {
 
 function renderSubmitButtons(form) {
   return React.createElement(React.Fragment, undefined, ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, undefined, undefined, /* Dense */-363472001, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_Button.make(undefined, /* Primary */-791844958, undefined, form[/* submitting */5], undefined, undefined, undefined, undefined, undefined, undefined, undefined, "submit", /* Contained */-515484397, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, String$App.make("Login", /* array */[]))]))])), ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, undefined, undefined, /* Dense */-363472001, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_Button.make(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* Outlined */-28821822, undefined, undefined, undefined, undefined, undefined, undefined, (function (_event) {
-                                  return ReasonReact.Router[/* push */0](Config$App.routes[/* register */2]);
+                                  return ReasonReact.Router[/* push */0](Config$App.routes[/* register */3]);
                                 }), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, String$App.make("Register", /* array */[]))]))])));
 }
 
 function renderLoginForm(param) {
   return ReasonReact.element(undefined, undefined, Curry._3(AsyncFormContainer[/* make */4], initialState, (function (state, form) {
+                    console.log(state);
+                    ReasonReact.Router[/* push */0](Config$App.routes[/* auth */0]);
+                    API$App.login(state[/* email */0], state[/* password */1], /* () */0).then((function (result) {
+                              console.log(result);
+                              return Promise.resolve(/* () */0);
+                            })).catch((function (error) {
+                            return Promise.resolve(/* () */0);
+                          }));
                     return /* () */0;
                   }), (function (form) {
                     var partial_arg = form[/* submit */8];

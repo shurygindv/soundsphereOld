@@ -7,6 +7,7 @@ let mapUrlToPage = (url: ReasonReact.Router.url) : Types.page =>
   switch (url.path) {
   | ["home"] => Home
   | ["login"] => Login
+  | ["auth"] => Waiting
   | ["register"] => Register
   | _ => Login
   };
@@ -34,6 +35,7 @@ let make = _children => {
     switch (self.state.page) {
     | Home => <Home />
     | Login => <Login />
+    | Waiting => <Waiting />
     | Register => <Register />
     },
 };

@@ -7,9 +7,9 @@ let make = _children => {
       MaterialUi.(
         <AppBar position=`Sticky color=`Primary>
           <Toolbar>
-            <Typography variant=`H5 color=`Inherit>
-              <String v="soundsphere" />
-            </Typography>
+              <Button href="#" color=`Inherit>
+               <String v="soundsphere" />
+              </Button>
           </Toolbar>
         </AppBar>
       )

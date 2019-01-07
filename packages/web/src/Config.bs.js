@@ -3,6 +3,7 @@
 
 
 var routes = /* record */[
+  /* auth */"/auth",
   /* home */"/home",
   /* login */"/login",
   /* register */"/register"

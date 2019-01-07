@@ -15,7 +15,7 @@ export default class Crypto {
     });
   }
 
-  public static async compare(plain: string, hash: string) {
+  public static async compare(plain: string, hash: string): Promise<boolean> {
     return await new Promise((resolver, rejector) => {
       bcrypt.compare(plain, hash, (err, res) => {
         if (err) {

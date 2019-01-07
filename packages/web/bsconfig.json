@@ -17,6 +17,7 @@
   "namespace": true,
   "bs-dependencies": [
     "@jsiebern/bs-material-ui",
+    "@glennsl/bs-json",
     "reason-react",
     "re-formality",
     "bs-fetch",

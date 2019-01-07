@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const NODE_ENV = process.env.NODE_ENV || "development";
-const PORT = process.env.PORT || 7777;
+const PORT = process.env.PORT || 8888;
 
 module.exports = {
   mode: NODE_ENV,
@@ -16,7 +16,11 @@ module.exports = {
     port: PORT,
     compress: true,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, "dist")
+    contentBase: path.join(__dirname, "dist"),
+
+    proxy: {
+      '/api': 'http://localhost:7777',
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({

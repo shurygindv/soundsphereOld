@@ -18,22 +18,22 @@ module Rule = {
 
   let email: reValidator = {
     isValid: Js.Re.fromString("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$") /* TODO: [%re ""] */,
-    error: "Email is incorrect, it doesn't match a pattern",
+    error: "Email doesn't match a pattern",
   };
 
   let password: reValidator = {
-    isValid: Js.Re.fromString(".{,5}+"),
-    error: "Min 5 characters",
+    isValid: Js.Re.fromString("^.{5,}$"),
+    error: "Min 5 length",
   };
 
   let minLength: fuValidator = {
     isValid: (value: string, length: int) => (value |> Js.String.length) >= length,
-    message: (count: int) => count |> Printf.sprintf("Min %d characters"),
+    message: (count: int) => count |> Printf.sprintf("Min %d length"),
   };
 
   let maxLength: fuValidator = {
     isValid: (value: string, length: int) => (value |> Js.String.length) < length,
-    message: (count: int) => count |> Printf.sprintf("Max %d characters"),
+    message: (count: int) => count |> Printf.sprintf("Max %d length"),
   }; 
 };
 

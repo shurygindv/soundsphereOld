@@ -8,6 +8,7 @@ const VERSION = 'v1';
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix(`api/${VERSION}`);
+  app.enableCors();
 
   await app.listen(7777);
 })();

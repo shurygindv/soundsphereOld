@@ -89,7 +89,7 @@ let renderEmailField = (form: AsyncFormContainer.interface) => {
   );
 };
 
-let renderPasswordField = (form: AsyncFormContainer.interface)  => {
+let renderPasswordField = (form: AsyncFormContainer.interface) => {
   MaterialUi.(
     <FormControl required=true>
       <TextField
@@ -128,7 +128,7 @@ let renderPasswordField = (form: AsyncFormContainer.interface)  => {
   );
 };
 
-let renderSubmitButtons = (form: AsyncFormContainer.interface)  => {
+let renderSubmitButtons = (form: AsyncFormContainer.interface) => {
   MaterialUi.(
     <>
       <FormControl margin=`Dense>
@@ -156,7 +156,19 @@ let renderLoginForm = () =>
     initialState
     onSubmit={(state, form) => {
       let {email, password}: Form.state = state;
-      ();
+      Js.log(state);
+
+      ReasonReact.Router.push(Config.routes.auth);
+      Js.Promise.(
+        API.login(~email, ~password, ())
+        |> then_(result => {
+             Js.log(result);
+
+             ignore() |> resolve;
+           })
+        |> catch(error => ignore() |> resolve)
+      );
+      ignore();
     }}>
     ...{form =>
       <form onSubmit={form.submit |> Formality.Dom.preventDefault}>
