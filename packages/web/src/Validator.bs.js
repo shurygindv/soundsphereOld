@@ -2,44 +2,120 @@
 'use strict';
 
 var Block = require("bs-platform/lib/js/block.js");
+var Curry = require("bs-platform/lib/js/curry.js");
+var Printf = require("bs-platform/lib/js/printf.js");
 
-var email_000 = /* exec */new RegExp("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$");
+var email_000 = /* isValid */new RegExp("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$");
 
 var email = /* record */[
   email_000,
-  /* error */"Email is incorrect, try again"
+  /* error */"Email is incorrect, it doesn't match a pattern"
 ];
 
-var password_000 = /* exec */new RegExp("^.{6,}$");
+var password_000 = /* isValid */new RegExp(".{,5}+");
 
 var password = /* record */[
   password_000,
-  /* error */"Password length should be more 5 characters"
+  /* error */"Min 5 characters"
+];
+
+function minLength_000(count) {
+  return Curry._1(Printf.sprintf(/* Format */[
+                  /* String_literal */Block.__(11, [
+                      "Min ",
+                      /* Int */Block.__(4, [
+                          /* Int_d */0,
+                          /* No_padding */0,
+                          /* No_precision */0,
+                          /* String_literal */Block.__(11, [
+                              " characters",
+                              /* End_of_format */0
+                            ])
+                        ])
+                    ]),
+                  "Min %d characters"
+                ]), count);
+}
+
+function minLength_001(value, length) {
+  return value.length >= length;
+}
+
+var minLength = /* record */[
+  minLength_000,
+  minLength_001
+];
+
+function maxLength_000(count) {
+  return Curry._1(Printf.sprintf(/* Format */[
+                  /* String_literal */Block.__(11, [
+                      "Max ",
+                      /* Int */Block.__(4, [
+                          /* Int_d */0,
+                          /* No_padding */0,
+                          /* No_precision */0,
+                          /* String_literal */Block.__(11, [
+                              " characters",
+                              /* End_of_format */0
+                            ])
+                        ])
+                    ]),
+                  "Max %d characters"
+                ]), count);
+}
+
+function maxLength_001(value, length) {
+  return value.length < length;
+}
+
+var maxLength = /* record */[
+  maxLength_000,
+  maxLength_001
 ];
 
 var Rule = /* module */[
   /* email */email,
-  /* password */password
+  /* password */password,
+  /* minLength */minLength,
+  /* maxLength */maxLength
 ];
 
-function test(rule, value) {
-  return rule[/* exec */0].test(value);
+function testRe(rule, value) {
+  return rule[/* isValid */0].test(value);
 }
 
 function use(name, value) {
-  if (name) {
-    var match = password_000.test(value);
-    if (match) {
+  if (typeof name === "number") {
+    if (name === 0) {
+      var match = email_000.test(value);
+      if (match) {
+        return /* Ok */Block.__(0, [/* Valid */0]);
+      } else {
+        return /* Error */Block.__(1, ["Email is incorrect, it doesn't match a pattern"]);
+      }
+    } else {
+      var match$1 = password_000.test(value);
+      if (match$1) {
+        return /* Ok */Block.__(0, [/* Valid */0]);
+      } else {
+        return /* Error */Block.__(1, ["Min 5 characters"]);
+      }
+    }
+  } else if (name.tag) {
+    var length = name[0];
+    var match$2 = Curry._2(maxLength_001, value, length);
+    if (match$2) {
       return /* Ok */Block.__(0, [/* Valid */0]);
     } else {
-      return /* Error */Block.__(1, ["Password length should be more 5 characters"]);
+      return /* Error */Block.__(1, [Curry._1(maxLength_000, length)]);
     }
   } else {
-    var match$1 = email_000.test(value);
-    if (match$1) {
+    var length$1 = name[0];
+    var match$3 = Curry._2(minLength_001, value, length$1);
+    if (match$3) {
       return /* Ok */Block.__(0, [/* Valid */0]);
     } else {
-      return /* Error */Block.__(1, ["Email is incorrect, try again"]);
+      return /* Error */Block.__(1, [Curry._1(minLength_000, length$1)]);
     }
   }
 }
@@ -47,6 +123,6 @@ function use(name, value) {
 var FInterop = /* module */[/* use */use];
 
 exports.Rule = Rule;
-exports.test = test;
+exports.testRe = testRe;
 exports.FInterop = FInterop;
 /* email Not a pure module */

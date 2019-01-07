@@ -6,6 +6,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Body$App = require("../components/Body.bs.js");
 var Formality = require("re-formality/src/Formality.bs.js");
+var Config$App = require("../Config.bs.js");
 var Footer$App = require("../components/Footer.bs.js");
 var Header$App = require("../components/Header.bs.js");
 var String$App = require("../components/String.bs.js");
@@ -101,72 +102,87 @@ var AsyncFormContainer = Formality__FormAsyncOnChange.Make([
       validators
     ]);
 
-function renderBody(param) {
-  return ReasonReact.element(undefined, undefined, Body$App.make(/* array */[ReasonReact.element(undefined, undefined, Curry._3(AsyncFormContainer[/* make */4], /* record */[
-                            /* email */"",
-                            /* password */""
-                          ], (function (state, form) {
-                              return /* () */0;
-                            }), (function (form) {
-                              var partial_arg = form[/* submit */8];
-                              var partial_arg$1 = Formality__PublicHelpers.Dom[/* preventDefault */0];
-                              var match = Curry._1(form[/* result */2], /* Email */0);
-                              var tmp;
-                              if (match !== undefined) {
-                                var match$1 = match;
-                                tmp = match$1.tag ? true : false;
-                              } else {
-                                tmp = false;
-                              }
-                              var match$2 = Curry._1(form[/* result */2], /* Email */0);
-                              var tmp$1;
-                              if (match$2 !== undefined) {
-                                var match$3 = match$2;
-                                tmp$1 = match$3.tag ? ReasonReact.element(undefined, undefined, String$App.make(match$3[0], /* array */[])) : ReasonReact.element(undefined, undefined, String$App.make("Email", /* array */[]));
-                              } else {
-                                tmp$1 = ReasonReact.element(undefined, undefined, String$App.make("Email", /* array */[]));
-                              }
-                              var match$4 = Curry._1(form[/* result */2], /* Password */1);
-                              var tmp$2;
-                              if (match$4 !== undefined) {
-                                var match$5 = match$4;
-                                tmp$2 = match$5.tag ? true : false;
-                              } else {
-                                tmp$2 = false;
-                              }
-                              var match$6 = Curry._1(form[/* result */2], /* Password */1);
-                              var tmp$3;
-                              if (match$6 !== undefined) {
-                                var match$7 = match$6;
-                                tmp$3 = match$7.tag ? ReasonReact.element(undefined, undefined, String$App.make(match$7[0], /* array */[])) : ReasonReact.element(undefined, undefined, String$App.make("Password", /* array */[]));
-                              } else {
-                                tmp$3 = ReasonReact.element(undefined, undefined, String$App.make("Password", /* array */[]));
-                              }
-                              return React.createElement("form", {
-                                          onSubmit: (function (param) {
-                                              return partial_arg$1(partial_arg, param);
-                                            })
-                                        }, ReasonReact.element(undefined, undefined, MaterialUi_FormGroup.make(undefined, undefined, undefined, undefined, /* array */[
-                                                  ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, undefined, undefined, undefined, true, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_TextField.make(undefined, undefined, undefined, undefined, form[/* submitting */5], tmp, undefined, undefined, undefined, "email", undefined, undefined, undefined, undefined, Caml_option.some(tmp$1), /* Normal */-453122489, undefined, undefined, (function (param) {
-                                                                        return Curry._1(form[/* blur */7], /* Email */0);
-                                                                      }), (function ($$event) {
-                                                                        return Curry._2(form[/* change */6], /* Email */0, update(form[/* state */0], $$event.target.value));
-                                                                      }), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* `String */[
-                                                                      -976970511,
-                                                                      form[/* state */0][/* email */0]
-                                                                    ], undefined, undefined, /* array */[]))])),
-                                                  ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, true, undefined, undefined, true, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_TextField.make(undefined, undefined, undefined, undefined, form[/* submitting */5], tmp$2, undefined, undefined, undefined, "password", undefined, undefined, undefined, undefined, Caml_option.some(tmp$3), /* Normal */-453122489, undefined, undefined, (function (param) {
-                                                                        return Curry._1(form[/* blur */7], /* Password */1);
-                                                                      }), (function ($$event) {
-                                                                        return Curry._2(form[/* change */6], /* Password */1, update$1(form[/* state */0], $$event.target.value));
-                                                                      }), undefined, undefined, undefined, undefined, undefined, undefined, undefined, "password", /* `String */[
-                                                                      -976970511,
-                                                                      form[/* state */0][/* password */1]
-                                                                    ], undefined, undefined, /* array */[]))])),
-                                                  ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, undefined, undefined, /* Dense */-363472001, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_Button.make(undefined, /* Primary */-791844958, undefined, form[/* submitting */5], undefined, undefined, undefined, undefined, undefined, undefined, undefined, "submit", /* Contained */-515484397, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, String$App.make("Login", /* array */[]))]))])),
-                                                  ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, undefined, undefined, /* Dense */-363472001, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_Button.make(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* Outlined */-28821822, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, String$App.make("Register", /* array */[]))]))]))
-                                                ])));
-                            })))]));
+var initialState = /* record */[
+  /* email */"",
+  /* password */""
+];
+
+function renderEmailField(form) {
+  var match = Curry._1(form[/* result */2], /* Email */0);
+  var tmp;
+  if (match !== undefined) {
+    var match$1 = match;
+    tmp = match$1.tag ? true : false;
+  } else {
+    tmp = false;
+  }
+  var match$2 = Curry._1(form[/* result */2], /* Email */0);
+  var tmp$1;
+  if (match$2 !== undefined) {
+    var match$3 = match$2;
+    tmp$1 = match$3.tag ? ReasonReact.element(undefined, undefined, String$App.make(match$3[0], /* array */[])) : ReasonReact.element(undefined, undefined, String$App.make("Email", /* array */[]));
+  } else {
+    tmp$1 = ReasonReact.element(undefined, undefined, String$App.make("Email", /* array */[]));
+  }
+  return ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, undefined, undefined, undefined, true, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_TextField.make(undefined, undefined, undefined, undefined, form[/* submitting */5], tmp, undefined, undefined, undefined, "email", undefined, undefined, undefined, undefined, Caml_option.some(tmp$1), /* Normal */-453122489, undefined, undefined, (function (param) {
+                              return Curry._1(form[/* blur */7], /* Email */0);
+                            }), (function ($$event) {
+                              return Curry._2(form[/* change */6], /* Email */0, update(form[/* state */0], $$event.target.value));
+                            }), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* `String */[
+                            -976970511,
+                            form[/* state */0][/* email */0]
+                          ], undefined, undefined, /* array */[]))]));
+}
+
+function renderPasswordField(form) {
+  var match = Curry._1(form[/* result */2], /* Password */1);
+  var tmp;
+  if (match !== undefined) {
+    var match$1 = match;
+    tmp = match$1.tag ? true : false;
+  } else {
+    tmp = false;
+  }
+  var match$2 = Curry._1(form[/* result */2], /* Password */1);
+  var tmp$1;
+  if (match$2 !== undefined) {
+    var match$3 = match$2;
+    tmp$1 = match$3.tag ? ReasonReact.element(undefined, undefined, String$App.make(match$3[0], /* array */[])) : ReasonReact.element(undefined, undefined, String$App.make("Password", /* array */[]));
+  } else {
+    tmp$1 = ReasonReact.element(undefined, undefined, String$App.make("Password", /* array */[]));
+  }
+  return ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, undefined, undefined, undefined, true, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_TextField.make(undefined, undefined, undefined, undefined, form[/* submitting */5], tmp, undefined, undefined, undefined, "password", undefined, undefined, undefined, undefined, Caml_option.some(tmp$1), /* Normal */-453122489, undefined, undefined, (function (param) {
+                              return Curry._1(form[/* blur */7], /* Password */1);
+                            }), (function ($$event) {
+                              return Curry._2(form[/* change */6], /* Password */1, update$1(form[/* state */0], $$event.target.value));
+                            }), undefined, undefined, undefined, undefined, undefined, undefined, undefined, "password", /* `String */[
+                            -976970511,
+                            form[/* state */0][/* password */1]
+                          ], undefined, undefined, /* array */[]))]));
+}
+
+function renderSubmitButtons(form) {
+  return React.createElement(React.Fragment, undefined, ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, undefined, undefined, /* Dense */-363472001, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_Button.make(undefined, /* Primary */-791844958, undefined, form[/* submitting */5], undefined, undefined, undefined, undefined, undefined, undefined, undefined, "submit", /* Contained */-515484397, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, String$App.make("Login", /* array */[]))]))])), ReasonReact.element(undefined, undefined, MaterialUi_FormControl.make(undefined, undefined, undefined, undefined, undefined, /* Dense */-363472001, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, MaterialUi_Button.make(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* Outlined */-28821822, undefined, undefined, undefined, undefined, undefined, undefined, (function (_event) {
+                                  return ReasonReact.Router[/* push */0](Config$App.routes[/* register */2]);
+                                }), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, /* array */[ReasonReact.element(undefined, undefined, String$App.make("Register", /* array */[]))]))])));
+}
+
+function renderLoginForm(param) {
+  return ReasonReact.element(undefined, undefined, Curry._3(AsyncFormContainer[/* make */4], initialState, (function (state, form) {
+                    return /* () */0;
+                  }), (function (form) {
+                    var partial_arg = form[/* submit */8];
+                    var partial_arg$1 = Formality__PublicHelpers.Dom[/* preventDefault */0];
+                    return React.createElement("form", {
+                                onSubmit: (function (param) {
+                                    return partial_arg$1(partial_arg, param);
+                                  })
+                              }, ReasonReact.element(undefined, undefined, MaterialUi_FormGroup.make(undefined, undefined, undefined, undefined, /* array */[
+                                        renderEmailField(form),
+                                        renderPasswordField(form),
+                                        renderSubmitButtons(form)
+                                      ])));
+                  })));
 }
 
 var component = ReasonReact.statelessComponent("Login-App");
@@ -182,8 +198,8 @@ function make(_children) {
           /* willUnmount */component[/* willUnmount */6],
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
-          /* render */(function (self) {
-              return React.createElement(React.Fragment, undefined, ReasonReact.element(undefined, undefined, Header$App.make(/* array */[])), renderBody(/* () */0), ReasonReact.element(undefined, undefined, Footer$App.make(/* array */[])));
+          /* render */(function (_self) {
+              return React.createElement(React.Fragment, undefined, ReasonReact.element(undefined, undefined, Header$App.make(/* array */[])), ReasonReact.element(undefined, undefined, Body$App.make(/* array */[renderLoginForm(/* () */0)])), ReasonReact.element(undefined, undefined, Footer$App.make(/* array */[])));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
@@ -195,7 +211,11 @@ function make(_children) {
 exports.Form = Form;
 exports.Styles = Styles;
 exports.AsyncFormContainer = AsyncFormContainer;
-exports.renderBody = renderBody;
+exports.initialState = initialState;
+exports.renderEmailField = renderEmailField;
+exports.renderPasswordField = renderPasswordField;
+exports.renderSubmitButtons = renderSubmitButtons;
+exports.renderLoginForm = renderLoginForm;
 exports.component = component;
 exports.make = make;
 /* controls Not a pure module */

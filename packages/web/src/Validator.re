@@ -1,33 +1,63 @@
 type validators =
   | Email
-  | Password;
+  | Password
+  | MinLength(int)
+  | MaxLength(int);
+
 
 module Rule = {
-  type def = {
-    exec: Js.Re.t,
+  type reValidator = {
+    isValid: Js.Re.t,
     error: string,
   };
 
-  let email: def = {
-    exec: Js.Re.fromString("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$") /* TODO: [%re ""] */,
-    error: "Email is incorrect, try again",
+  type fuValidator = {
+    message: int => string,
+    isValid: (string, int) => bool,
   };
 
-  let password: def = {
-    exec: Js.Re.fromString("^.{6,}$"),
-    error: "Password length should be more 5 characters",
+  let email: reValidator = {
+    isValid: Js.Re.fromString("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$") /* TODO: [%re ""] */,
+    error: "Email is incorrect, it doesn't match a pattern",
   };
+
+  let password: reValidator = {
+    isValid: Js.Re.fromString(".{,5}+"),
+    error: "Min 5 characters",
+  };
+
+  let minLength: fuValidator = {
+    isValid: (value: string, length: int) => (value |> Js.String.length) >= length,
+    message: (count: int) => count |> Printf.sprintf("Min %d characters"),
+  };
+
+  let maxLength: fuValidator = {
+    isValid: (value: string, length: int) => (value |> Js.String.length) < length,
+    message: (count: int) => count |> Printf.sprintf("Max %d characters"),
+  }; 
 };
 
-let test = (rule: Rule.def, value: string) => rule.exec |> Js.Re.test(value) /* interop/adapter */;
+let testRe = (rule: Rule.reValidator, value: string) =>
+  rule.isValid |> Js.Re.test(value);
 
 module FInterop = {
+  /* FInterop interop/adapter */
   open Formality;
 
   let use = (name: validators, value: string) : result('message) =>
     switch (name) {
-    | Email => test(Rule.email, value) ? Ok(Valid) : Error(Rule.email.error)
+    | Email =>
+      testRe(Rule.email, value) ? Ok(Valid) : Error(Rule.email.error)
+
     | Password =>
-      test(Rule.password, value) ? Ok(Valid) : Error(Rule.password.error)
+      testRe(Rule.password, value) ? Ok(Valid) : Error(Rule.password.error)
+
+    | MinLength(length) =>
+      Rule.minLength.isValid(value, length) ?
+        Ok(Valid) :  Error(length |> Rule.minLength.message)
+
+    | MaxLength(length) =>
+      Rule.maxLength.isValid(value, length) ?
+        Ok(Valid) : Error(length |> Rule.maxLength.message)
     };
 };
