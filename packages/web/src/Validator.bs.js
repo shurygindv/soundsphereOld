@@ -10,7 +10,7 @@ var email = /* record */[
   /* error */"Email is incorrect, try again"
 ];
 
-var password_000 = /* exec */new RegExp(".{,5}+");
+var password_000 = /* exec */new RegExp("^.{6,}$");
 
 var password = /* record */[
   password_000,
@@ -28,10 +28,15 @@ function test(rule, value) {
 
 function use(name, value) {
   if (name) {
-    return /* Error */Block.__(1, ["heeey, you are fool"]);
-  } else {
-    var match = email_000.test(value);
+    var match = password_000.test(value);
     if (match) {
+      return /* Ok */Block.__(0, [/* Valid */0]);
+    } else {
+      return /* Error */Block.__(1, ["Password length should be more 5 characters"]);
+    }
+  } else {
+    var match$1 = email_000.test(value);
+    if (match$1) {
       return /* Ok */Block.__(0, [/* Valid */0]);
     } else {
       return /* Error */Block.__(1, ["Email is incorrect, try again"]);

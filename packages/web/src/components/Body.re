@@ -1,8 +1,7 @@
 module Styles = {
   open Css;
 
-  let container =
-    style([width(px(80)), background(rgba(0, 0, 0, 0.2)), margin(auto)]);
+  let container = style([maxWidth(pct(40.0)), margin(auto)]);
 };
 
 let component = ReasonReact.statelessComponent(__MODULE__);

@@ -9,28 +9,25 @@ module Rule = {
   };
 
   let email: def = {
-    exec: Js.Re.fromString("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$"), /* TODO: [%re ""] */
-
+    exec: Js.Re.fromString("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$") /* TODO: [%re ""] */,
     error: "Email is incorrect, try again",
   };
 
   let password: def = {
-    exec: Js.Re.fromString(".{,5}+"),
-
+    exec: Js.Re.fromString("^.{6,}$"),
     error: "Password length should be more 5 characters",
   };
 };
 
-let test = (rule: Rule.def, value: string) => rule.exec |> Js.Re.test(value);
+let test = (rule: Rule.def, value: string) => rule.exec |> Js.Re.test(value) /* interop/adapter */;
 
-/* interop/adapter */
 module FInterop = {
   open Formality;
 
-  let use = (name: validators, value: string): result('message) => {
+  let use = (name: validators, value: string) : result('message) =>
     switch (name) {
     | Email => test(Rule.email, value) ? Ok(Valid) : Error(Rule.email.error)
-    | _ => Error("heeey, you are fool")
+    | Password =>
+      test(Rule.password, value) ? Ok(Valid) : Error(Rule.password.error)
     };
-  };
 };

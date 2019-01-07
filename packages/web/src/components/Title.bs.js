@@ -2,22 +2,20 @@
 'use strict';
 
 var Css = require("bs-css/src/Css.js");
-var ReactDOMRe = require("reason-react/src/ReactDOMRe.js");
+var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 
-var container = Css.style(/* :: */[
-      Css.maxWidth(Css.pct(40.0)),
-      /* :: */[
-        Css.margin(Css.auto),
-        /* [] */0
-      ]
+var uppercased = Css.style(/* :: */[
+      Css.textTransform(Css.uppercase),
+      /* [] */0
     ]);
 
-var Styles = /* module */[/* container */container];
+var Styles = /* module */[/* uppercased */uppercased];
 
-var component = ReasonReact.statelessComponent("Body-App");
+var component = ReasonReact.statelessComponent("Title-App");
 
-function make(children) {
+function make($staropt$star, content, _children) {
+  var level = $staropt$star !== undefined ? $staropt$star : 1;
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -29,9 +27,22 @@ function make(children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (_self) {
-              return ReactDOMRe.createElementVariadic("main", {
-                          className: container
-                        }, children);
+              switch (level) {
+                case 1 : 
+                    return React.createElement("h1", {
+                                className: uppercased
+                              }, content);
+                case 2 : 
+                    return React.createElement("h2", undefined, content);
+                case 3 : 
+                    return React.createElement("h3", undefined, content);
+                case 4 : 
+                    return React.createElement("h4", undefined, content);
+                case 5 : 
+                    return React.createElement("h5", undefined, content);
+                default:
+                  return React.createElement("p", undefined, content);
+              }
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
@@ -43,4 +54,4 @@ function make(children) {
 exports.Styles = Styles;
 exports.component = component;
 exports.make = make;
-/* container Not a pure module */
+/* uppercased Not a pure module */
