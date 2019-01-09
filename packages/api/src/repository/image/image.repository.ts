@@ -31,10 +31,10 @@ export class ImageRepository extends BaseRepository
     return true;
   }
 
-  async findOne(id: number): Promise<ImageEntity> {
+  async findOne(id: string): Promise<ImageEntity> {
     const commander = SqlCommander.create<ImageEntity>(this.db);
 
-    commander.addInput('Id', id);
+    commander.addInput('ImageId', id);
 
     const result = await commander.execute(PROCEDURE_NAME.FIND_BY_ID);
 
@@ -49,7 +49,7 @@ export class ImageRepository extends BaseRepository
     throw new Error('Method not implemented.');
   }
 
-  delete(id: number): Promise<boolean> {
+  delete(id: string): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
 }

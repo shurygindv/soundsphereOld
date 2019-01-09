@@ -24,6 +24,6 @@ export class ImageController {
 
   @Get()
   async findOne(@Query('id') id: string) {
-    return await this.imageService.findOne(Number(id));
+    return await this.imageService.findOne(id);
   }
 }

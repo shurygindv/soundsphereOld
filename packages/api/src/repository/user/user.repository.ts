@@ -38,10 +38,10 @@ export class UserRepository extends BaseRepository
     return true;
   }
 
-  async findOne(id: number): Promise<UserEntity> {
+  async findOne(id: string): Promise<UserEntity> {
     const commander = SqlCommander.create<UserEntity>(this.db);
 
-    commander.addInput('Id', id);
+    commander.addInput('UserId', id);
 
     const result = await commander.execute(PROCEDURE_NAME.FIND_BY_ID);
 
@@ -70,7 +70,7 @@ export class UserRepository extends BaseRepository
     throw new Error('Method not implemented.');
   }
 
-  delete(id: number): Promise<boolean> {
+  delete(id: string): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
 }
